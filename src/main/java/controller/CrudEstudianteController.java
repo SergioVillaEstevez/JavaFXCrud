@@ -46,10 +46,25 @@ public class CrudEstudianteController {
     @FXML
     void actualizarEstudiante(ActionEvent event) {
 
+        Estudiante estudiante= tblEstudiante.getSelectionModel().getSelectedItem();
+
+        estudiante.setNombre(txtNombre.getText());
+        estudiante.setApellido(txtApellido.getText());
+        estudiante.setTelefono(txtTelefono.getText());
+
+
+        actualizarTabla();
+
+
     }
 
     @FXML
     void eliminarEstudiante(ActionEvent event) {
+
+      eliminarEstudiante();
+    }
+
+    public void eliminarEstudiante(){
 
         Estudiante estudiante= tblEstudiante.getSelectionModel().getSelectedItem();
 
@@ -91,6 +106,32 @@ public class CrudEstudianteController {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colNumMatricula.setCellValueFactory(new PropertyValueFactory<>("numeroMatricula"));
         colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+
+        tblEstudiante.setOnMouseClicked(mouseEvent -> {
+
+            if(tblEstudiante.getSelectionModel().getSelectedItem()!= null){
+
+                cargarCampos();
+            }
+            if(tblEstudiante.getSelectionModel().getSelectedItem()== null){
+                limpiarCampos();
+            }
+
+
+        });
+    }
+
+
+    public void cargarCampos(){
+        Estudiante estudiante= tblEstudiante.getSelectionModel().getSelectedItem();
+
+        txtNombre.setText(estudiante.getNombre());
+        txtApellido.setText(estudiante.getApellido());
+        txtTelefono.setText(estudiante.getTelefono());
+        txtNumMatricula.setText(estudiante.getNumeroMatricula());
+
+        txtNumMatricula.setEditable(false);
+
     }
 
     private void limpiarCampos(){
